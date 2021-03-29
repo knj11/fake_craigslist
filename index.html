@@ -4,12 +4,57 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Animation -->
+  <!-- https://animate.style/ -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <!-- wing css framwork -->
+  <!-- https://kbrsh.github.io/wing/#guide -->
+  <link rel="stylesheet" href="https://unpkg.com/wingcss"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="/styles.css">
+  <!-- Font Awesome script -->
+  <script src="https://kit.fontawesome.com/c65167e2a5.js" crossorigin="anonymous"></script>
+  <script src="/app.js" defer type="module"></script>
   <title>Stranger Things</title>
 </head>
 <body>
-  <nav>
-
-  </nav>
-  
+  <div class="app">
+    <div class="row">
+      <div class="col-1">
+        <div class="nav">
+          <h5 class="nav-logo">Craigslist</h5>
+          <a class="nav-item" id="signUp" href="#">Sign up</a>
+          <a class="nav-item" id="logIn" href="#">Login</a>
+          <a class="nav-item" href="#">Item</a>
+        </div>
+      </div>
+      <div class="col-2 right">
+        <div class="nav userInfo">
+          <a href="#" class="nav-item" id="logOut">Log Out</a>
+          <div class="nav-item">
+            <span id="userName"></span>
+            <i class="fas fa-user"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="loginForm">
+    <form>
+      <div class="row">
+        <div class="col-1">
+          <h2 id="formTitle"></h2>
+        </div>
+        <div class="col-2 right">
+          <i class="fas fa-times-circle" id="exit"></i>
+        </div>
+      </div>
+      <label for="username">Username</label>
+      <input type="text" name="username" id="username">
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password">
+      <button>Submit</button>
+    </form>
+  </div>
 </body>
 </html>

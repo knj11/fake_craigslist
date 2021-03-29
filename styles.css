@@ -1,0 +1,29 @@
+body {
+  height: 100vh;
+}
+
+.loginForm:not(.open) {
+  display: none;
+}
+
+.loginForm.open {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(6px);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#exit {
+  position: relative;
+  top: 0px;
+}
+
+.userInfo:not(.loggedIn) {
+  display: none;
+}
