@@ -23,7 +23,3 @@ body {
   position: relative;
   top: 0px;
 }
-
-.userInfo:not(.loggedIn) {
-  display: none;
-}
