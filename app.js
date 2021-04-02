@@ -1,5 +1,6 @@
 import { logInRequest } from "./auth.js";
-import { loggedInRender, notLoggedInRender } from "./render.js";
+import { loggedInRender, notLoggedInRender, getPostTag } from "./render.js";
+import { getPosts } from "./post.js";
 
 //const BASE_URL = `https://strangers-things.herokuapp.com`;
 //const COHORT_PATH = `/api/2101-vpi-rm-web-pt`;
@@ -11,11 +12,20 @@ function isLoggedIn() {
   return localStorage.token ? true : false;
 }
 
-function bootStrap() {
+async function bootStrap() {
   if (isLoggedIn()) {
     loggedInRender();
   } else {
     notLoggedInRender();
+  }
+
+  try {
+    const postsArr = await getPosts();
+    postsArr.forEach(post => {
+      $('.cards').append(getPostTag(post));
+    })
+  } catch (error) {
+    console.error(error)
   }
 }
 

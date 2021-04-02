@@ -39,3 +39,16 @@ export function notLoggedInRender() {
     $(".loginForm").addClass("open");
   });
 }
+
+export function getPostTag(post) {
+  let div = $('<div class="card"></div>');
+  div.html(`
+    <div class="card-content">
+      <h4 class="card-title">${post.title}</h4>
+      <p>${post.description}</p>
+    </div>
+  `);
+  div.data("postObj", post);
+  console.log(div)
+  return div;
+}
