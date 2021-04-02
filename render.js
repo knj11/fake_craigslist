@@ -1,14 +1,13 @@
 export function loggedInRender() {
   const userName = localStorage.getItem("username");
-  $(".userInfo").empty();
-  $(".userInfo").html(`
-    <a href="#" class="nav-item" id="logOut">Log Out</a>
-    <div class="nav-item">
-      <span id="userName"></span>
-      <i class="fas fa-user"></i>
-    </div>
-  `);
-  $("#userName").text(userName);
+  //Add the logged in User links
+  $("#userMenu").removeClass("d-none");
+
+  //Remove the links for Login
+  $("#signUp").addClass("d-none");
+  $("#logIn").addClass("d-none");
+
+  $("#user").text(userName);
   $(".loginForm").removeClass("open");
 
   //adding click handlers
@@ -17,38 +16,53 @@ export function loggedInRender() {
     localStorage.removeItem("username");
     location.reload();
   });
+
+  $("#createPost").on("click", (event) => {
+    $(".createForm").addClass("open");
+  });
 }
 
 export function notLoggedInRender() {
-  $(".userInfo").empty();
-  $(".userInfo").html(`
-    <a class="nav-item" id="signUp" href="#">Sign up</a>
-    <a class="nav-item" id="logIn" href="#">Login</a>
-  `);
+  //clear out the UserMenu Dropdown in the nav bar
+  $("#userMenu").addClass("d-none");
 
   //Adding Click handlers
   $("#signUp").on("click", (event) => {
-    $("#formTitle").text("Sign-up Form");
-    $("form button").data("newUserBool", true);
+    $("#loginTypeTitle").text("Sign-up Form");
+    $("#loginTypeButton").data("newUserBool", true);
+    $("#loginTypeButton").text("Sign Up");
     $(".loginForm").addClass("open");
   });
 
   $("#logIn").on("click", (event) => {
-    $("#formTitle").text("Login Form");
-    $("form button").data("newUserBool", false);
+    $("#loginTypeTitle").text("Login Form");
+    $("#loginTypeButton").data("newUserBool", false);
+    $("#loginTypeButton").text("Sign In");
     $(".loginForm").addClass("open");
   });
 }
 
-export function getPostTag(post) {
-  let div = $('<div class="card"></div>');
-  div.html(`
-    <div class="card-content">
-      <h4 class="card-title">${post.title}</h4>
-      <p>${post.description}</p>
+function getHtmlCard(post) {
+  let div = $(`
+    <div class="card m-3">
+      <div class="card-header">
+        <h4 class="card-title">${post.title}</h4>
+        <p>User: ${post.author.username}</p>
+        <p>Location: ${post.location}</p>
+      </div>
+      <div class="card-body">
+        <p class="card-text">${post.description}</p>
+      </div>
+      <div class="card-footer">
+        <p>Price: ${post.price}</p>
+      </div>
     </div>
   `);
   div.data("postObj", post);
-  console.log(div)
   return div;
+}
+
+export function renderCards(cardArray) {
+  //function only takes an Array
+  cardArray.forEach((element) => $("#cardGroup").append(getHtmlCard(element)));
 }

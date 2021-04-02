@@ -1,12 +1,26 @@
 /* body {
   height: 100vh;
 } */
+/* .loginForm form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} */
+.createForm form,
+.loginForm form {
+  background-color: rgb(182, 182, 182);
+  border: 5px solid black;
+  border-radius: 20px;
+  padding: 15px;
+  width: 350px;
+}
 
+.createForm:not(.open),
 .loginForm:not(.open) {
   display: none;
 }
 
-.loginForm.open {
+.open {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,18 +33,13 @@
   bottom: 0;
 }
 
-#exit {
-  position: relative;
-  top: 0px;
-}
-
-.cards {
+/* .cards {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-}
+} */
 
-.card {
+/* .card {
   display: flex;
   flex-direction: column;
   margin-bottom: 16px;
@@ -51,4 +60,4 @@
 .card-title {
   margin: 0;
 
-}
+} */

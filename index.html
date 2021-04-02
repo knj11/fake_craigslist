@@ -10,9 +10,23 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
-    <!-- wing css framwork -->
-    <!-- https://kbrsh.github.io/wing/#guide -->
-    <link rel="stylesheet" href="https://unpkg.com/wingcss" />
+    <!-- bootstrap css framwork -->
+    <!-- https://getbootstrap.com/ -->
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+      crossorigin="anonymous"
+    />
+    <!-- Bootstrap js script -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+      defer
+      crossorigin="anonymous"
+    ></script>
+    <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/styles.css" />
     <!-- Font Awesome script -->
@@ -25,36 +39,183 @@
   </head>
   <body>
     <div class="app">
-      <div class="row">
-        <div class="col-1">
-          <div class="nav mainNav">
-            <h5 class="nav-logo">Craigslist</h5>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Koby-list</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item dropdown" id="userMenu">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="user"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  User
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li>
+                    <a class="dropdown-item" id="createPost" href="#"
+                      >Create Post</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" id="myPosts" href="#"
+                      >My Posts</a
+                    >
+                  </li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a class="dropdown-item" id="logOut" href="#">Log Out</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="signUp" href="#">Sign Up</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="logIn" href="#">Log In</a>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input
+                class="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+              <button class="btn btn-outline-success" type="submit">
+                Search
+              </button>
+            </form>
           </div>
         </div>
-        <div class="col-2 right">
-          <div class="nav userInfo"></div>
-        </div>
-      </div>
+      </nav>
+      <!-- Where all the cards are stored -->
       <main>
-        <div class="cards">
-        </div>
+        <div class="card-group" id="cardGroup"></div>
       </main>
     </div>
+    <!-- Form will be used for Sign Up and log In -->
     <div class="loginForm">
-      <form>
-        <div class="row">
-          <div class="col-1">
-            <h2 id="formTitle"></h2>
-          </div>
-          <div class="col-2 right">
-            <i class="fas fa-times-circle" id="exit"></i>
-          </div>
+      <form class="d-flex flex-column" id="loginForm">
+        <div class="d-flex flex-row justify-content-between">
+          <h1 class="h3 mb-3 fw-normal" id="loginTypeTitle"></h1>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-x-circle-fill"
+            viewBox="0 0 16 16"
+            id="exitLogin"
+          >
+            <path
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"
+            />
+          </svg>
         </div>
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username" />
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" />
-        <button>Submit</button>
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            placeholder="username"
+          />
+          <label for="floatingInput">Username</label>
+        </div>
+        <div class="form-floating">
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            placeholder="Password"
+          />
+          <label for="floatingPassword">Password</label>
+        </div>
+        <button
+          class="w-100 btn btn-lg btn-primary"
+          type="submit"
+          id="loginTypeButton"
+        ></button>
+        <p id="logInWarning" style="color: red"></p>
+      </form>
+    </div>
+    <div class="createForm">
+      <form id="createPostForm">
+        <div class="d-flex flex-row justify-content-between">
+          <h1 class="h3 mb-3 fw-normal" id="createPostTitle">Create Post</h1>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-x-circle-fill"
+            viewBox="0 0 16 16"
+            id="exitCreatePost"
+          >
+            <path
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"
+            />
+          </svg>
+        </div>
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="postTitle"
+            placeholder="title"
+          />
+          <label for="postTitle" class="form-label">Title</label>
+        </div>
+        <div class="mb-3">
+          <label for="postDescription" class="form-label">Description</label>
+          <textarea
+            class="form-control"
+            id="postDescription"
+            rows="10"
+          ></textarea>
+        </div>
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="postPrice"
+            placeholder="price"
+          />
+          <label for="postPrice" class="form-label">Price</label>
+        </div>
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="postLocation"
+            placeholder="Location"
+          />
+          <label for="postLocation" class="form-label">Location</label>
+        </div>
+
+        <button
+          class="w-100 btn btn-lg btn-primary"
+          type="submit"
+          id="submitPost"
+        >
+          Submit
+        </button>
+        <p id="postWarning" style="color: red"></p>
       </form>
     </div>
   </body>

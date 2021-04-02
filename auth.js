@@ -29,7 +29,8 @@ export async function logInRequest({ username, password, newUserBool }) {
     } else {
       console.log(error.name);
       console.log(error.message);
-      return jsonObj;
+      $("#logInWarning").text(error.message);
+      return false;
     }
   } catch (error) {
     console.log(error);
