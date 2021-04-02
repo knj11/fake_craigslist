@@ -11,6 +11,7 @@ let pageState = {
   isLoggedIn: localStorage.token ? true : false,
   token: localStorage.token,
   username: localStorage.username,
+  isHomeScreen: true,
   updatePageState: function () {
     this.isLoggedIn = localStorage.token ? true : false;
     this.token = localStorage.token;
@@ -23,6 +24,17 @@ const loginForm = $("#loginForm");
 const createPostForm = $("#createPostForm");
 const cardGroup = $("#cardGroup");
 
+async function renderAllPosts() {
+  cardGroup.empty();
+  try {
+    const postsArray = await getPosts();
+    //we pass the array of post to the render function
+    renderCards(postsArray);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 async function bootStrap() {
   if (pageState.isLoggedIn) {
     loggedInRender();
@@ -31,13 +43,7 @@ async function bootStrap() {
   }
 
   //Regardless of if the user is logged in we want to render all the cragslist post ads
-  try {
-    const postsArray = await getPosts();
-    //we pass the array of post to the render function
-    renderCards(postsArray);
-  } catch (error) {
-    console.error(error);
-  }
+  await renderAllPosts();
 }
 
 loginForm.submit(async function (event) {
@@ -90,6 +96,7 @@ $("#myPosts").on("click", async (event) => {
     cardGroup.empty();
 
     renderCards(myPosts);
+    pageState.isHomeScreen = false;
 
     console.log("myPosts", myPosts);
   } catch (error) {
@@ -110,6 +117,13 @@ $("#exitCreatePost").on("click", (event) => {
   $("#postDescription").val("");
   $("#postPrice").val("");
   $(".createForm").removeClass("open");
+});
+
+$("#home").on("click", async (event) => {
+  if (pageState.isHomeScreen) return;
+
+  await renderAllPosts();
+  pageState.isHomeScreen = true;
 });
 
 bootStrap();
