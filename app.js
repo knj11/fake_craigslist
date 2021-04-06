@@ -1,7 +1,7 @@
 import { logInRequest } from "./auth.js";
 import { loggedInRender, notLoggedInRender, renderCards } from "./render.js";
 import { createPost, getPosts } from "./post.js";
-import { getUserInfo } from "./user.js";
+import { getUserInfo, deleteUserPost } from "./user.js";
 
 //const BASE_URL = `https://strangers-things.herokuapp.com`;
 //const COHORT_PATH = `/api/2101-vpi-rm-web-pt`;
@@ -24,12 +24,33 @@ const loginForm = $("#loginForm");
 const createPostForm = $("#createPostForm");
 const cardGroup = $("#cardGroup");
 
+function addCardDeleteEventListener() {
+  $(".deletePost").on("click", async function () {
+    const card = $(this).closest(".card")
+    const id = card.data("postId");
+    console.log("deleteId", id);
+    await deleteUserPost(pageState.token, id).then(() =>{
+      card.fadeOut();
+    });
+  });
+}
+
+function addCardEditEventListener() {
+  $(".editPost").on("click", function () {
+    const id = $(this).closest(".card").data("postId");
+    console.log(id);
+  });
+}
+
 async function renderAllPosts() {
   cardGroup.empty();
   try {
-    const postsArray = await getPosts();
+    const postsArray = await getPosts(pageState.token);
     //we pass the array of post to the render function
-    renderCards(postsArray);
+    console.log("postArray", postsArray);
+    renderCards(postsArray, false);
+    addCardDeleteEventListener();
+    addCardEditEventListener();
   } catch (error) {
     console.error(error);
   }
@@ -60,6 +81,7 @@ loginForm.submit(async function (event) {
         localStorage.setItem("username", username);
         pageState.updatePageState();
         loggedInRender();
+        renderAllPosts();
       }
     });
   } catch (error) {
@@ -95,7 +117,9 @@ $("#myPosts").on("click", async (event) => {
     //empty the cardGroup space
     cardGroup.empty();
 
-    renderCards(myPosts);
+    renderCards(myPosts, true);
+    addCardDeleteEventListener();
+    addCardEditEventListener();
     pageState.isHomeScreen = false;
 
     console.log("myPosts", myPosts);
@@ -121,7 +145,6 @@ $("#exitCreatePost").on("click", (event) => {
 
 $("#home").on("click", async (event) => {
   if (pageState.isHomeScreen) return;
-
   await renderAllPosts();
   pageState.isHomeScreen = true;
 });

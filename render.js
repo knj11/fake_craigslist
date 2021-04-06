@@ -42,7 +42,7 @@ export function notLoggedInRender() {
   });
 }
 
-function getHtmlCard(post) {
+function getHtmlCard(post, isMyPostPage) {
   let div = $(`
     <div class="card m-3">
       <div class="card-header">
@@ -52,17 +52,26 @@ function getHtmlCard(post) {
       </div>
       <div class="card-body">
         <p class="card-text">${post.description}</p>
+        <p>Price: ${post.price}</p>
       </div>
       <div class="card-footer">
-        <p>Price: ${post.price}</p>
+        <div class="d-flex justify-content-between">
+          ${
+            (post.isAuthor || isMyPostPage)
+              ? `<button type="button" class="btn btn-danger deletePost">Delete</button>` +
+                `<button type="button" class="btn btn-info editPost">Edit</button>`
+              : ""
+          }
+        </div>
       </div>
     </div>
   `);
-  div.data("postObj", post);
+
+  div.data("postId", post._id);
   return div;
 }
 
-export function renderCards(cardArray) {
+export function renderCards(cardArray, isMyPostPage) {
   //function only takes an Array
-  cardArray.forEach((element) => $("#cardGroup").append(getHtmlCard(element)));
+  cardArray.forEach((element) => $("#cardGroup").append(getHtmlCard(element, isMyPostPage)));
 }

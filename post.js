@@ -1,9 +1,15 @@
 const BASE_URL = `https://strangers-things.herokuapp.com`;
 const COHORT_PATH = `/api/2101-vpi-rm-web-pt`;
 
-export async function getPosts() {
+export async function getPosts(token) {
   try {
-    const response = await fetch(`${BASE_URL + COHORT_PATH}/posts`);
+    const response = await fetch(`${BASE_URL + COHORT_PATH}/posts`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }
+    });
     const jsonObj = await response.json();
     const {
       data: { posts },
