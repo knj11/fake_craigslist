@@ -57,7 +57,7 @@ function getHtmlCard(post, isMyPostPage) {
       <div class="card-footer">
         <div class="d-flex justify-content-between">
           ${
-            (post.isAuthor || isMyPostPage)
+            post.isAuthor || isMyPostPage
               ? `<button type="button" class="btn btn-danger deletePost">Delete</button>` +
                 `<button type="button" class="btn btn-info editPost">Edit</button>`
               : ""
@@ -73,5 +73,7 @@ function getHtmlCard(post, isMyPostPage) {
 
 export function renderCards(cardArray, isMyPostPage) {
   //function only takes an Array
-  cardArray.forEach((element) => $("#cardGroup").append(getHtmlCard(element, isMyPostPage)));
+  cardArray.forEach((element) =>
+    $("#cardGroup").append(getHtmlCard(element, isMyPostPage))
+  );
 }
