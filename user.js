@@ -37,3 +37,24 @@ export async function deleteUserPost(token, id) {
     return;
   }
 }
+
+export async function sendMessage(token, postid, message) {
+  try {
+    const response = await fetch(`${BASE_URL + COHORT_PATH}/posts/${postid}/messages`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        message: {
+          content: message,
+        },
+      }),
+    });
+    const jsonObj = await response.json();
+    console.log("messageInfoObj", jsonObj);
+  } catch (error) {
+    console.log("sendMessageError", error);
+  }
+}

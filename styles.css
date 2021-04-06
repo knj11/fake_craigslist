@@ -7,7 +7,8 @@
   align-items: center;
 } */
 .createForm form,
-.loginForm form {
+.loginForm form,
+.messageForm form {
   background-color: rgb(182, 182, 182);
   border: 5px solid black;
   border-radius: 20px;
@@ -16,7 +17,8 @@
 }
 
 .createForm:not(.open),
-.loginForm:not(.open) {
+.loginForm:not(.open),
+.messageForm:not(.open) {
   display: none;
 }
 

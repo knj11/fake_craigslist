@@ -1,7 +1,7 @@
 import { logInRequest } from "./auth.js";
 import { loggedInRender, notLoggedInRender, renderCards } from "./render.js";
 import { createPost, getPosts } from "./post.js";
-import { getUserInfo, deleteUserPost } from "./user.js";
+import { getUserInfo, deleteUserPost, sendMessage } from "./user.js";
 
 //const BASE_URL = `https://strangers-things.herokuapp.com`;
 //const COHORT_PATH = `/api/2101-vpi-rm-web-pt`;
@@ -23,6 +23,7 @@ let pageState = {
 const loginForm = $("#loginForm");
 const createPostForm = $("#createPostForm");
 const cardGroup = $("#cardGroup");
+const messageForm = $("#messageForm");
 
 function addCardDeleteEventListener() {
   $(".deletePost").on("click", async function () {
@@ -31,6 +32,26 @@ function addCardDeleteEventListener() {
     console.log("deleteId", id);
     await deleteUserPost(pageState.token, id).then(() => {
       card.fadeOut();
+    });
+  });
+}
+function addMessageEventListener() {
+  $(".messageUser").on("click", async function () {
+    $(".messageForm").addClass("open");
+    const card = $(this).closest(".card");
+    const id = card.data("postId");
+    messageForm.submit(async function (event) {
+      event.preventDefault();
+      const postId = id;
+      const message = $("#postMessage").val();
+      try {
+        await sendMessage(pageState.token, postId, message).then(() => {
+          $("#postMessage").val("");
+          $(".messageForm").removeClass("open");
+        });
+      } catch (error) {
+        console.error("messageError", error);
+      }
     });
   });
 }
@@ -49,6 +70,7 @@ async function renderAllPosts() {
     //we pass the array of post to the render function
     console.log("postArray", postsArray);
     renderCards(postsArray, false);
+    addMessageEventListener();
     addCardDeleteEventListener();
     addCardEditEventListener();
   } catch (error) {
@@ -108,6 +130,12 @@ createPostForm.submit(async function (event) {
   }
 });
 
+// messageForm.submit(async function (event) {
+//   event.preventDefault();
+//   const message = $("#postMessage").val()
+
+// })
+
 //This button on the user menu renders all posts made by the user
 $("#myPosts").on("click", async (event) => {
   try {
@@ -141,6 +169,11 @@ $("#exitCreatePost").on("click", (event) => {
   $("#postDescription").val("");
   $("#postPrice").val("");
   $(".createForm").removeClass("open");
+});
+
+$("#exitMessage").on("click", (event) => {
+  $("#postMessage").val("");
+  $(".messageForm").removeClass("open");
 });
 
 $("#home").on("click", async (event) => {

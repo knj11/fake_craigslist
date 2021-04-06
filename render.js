@@ -57,12 +57,17 @@ function getHtmlCard(post, isMyPostPage) {
       <div class="card-footer">
         <div class="d-flex justify-content-between">
           ${
-            (post.active && (post.isAuthor || isMyPostPage))
+            post.active && (post.isAuthor || isMyPostPage)
               ? `<button type="button" class="btn btn-danger deletePost">Delete</button>` +
                 `<button type="button" class="btn btn-info editPost">Edit</button>`
+              : ``
+          }
+          ${post.active ? "" : "Post has been deleted"}
+          ${
+            ((post.active && !post.isAuthor) && !isMyPostPage)
+              ? `<button type="button" class="btn btn-info messageUser">Message</button>`
               : ""
           }
-          ${(post.active) ? "" : "Post has been deleted"}
         </div>
       </div>
     </div>
