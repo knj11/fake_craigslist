@@ -26,10 +26,10 @@ const cardGroup = $("#cardGroup");
 
 function addCardDeleteEventListener() {
   $(".deletePost").on("click", async function () {
-    const card = $(this).closest(".card")
+    const card = $(this).closest(".card");
     const id = card.data("postId");
     console.log("deleteId", id);
-    await deleteUserPost(pageState.token, id).then(() =>{
+    await deleteUserPost(pageState.token, id).then(() => {
       card.fadeOut();
     });
   });
@@ -113,7 +113,7 @@ $("#myPosts").on("click", async (event) => {
   try {
     console.log("pageState Token", pageState.token);
     const myPosts = await getUserInfo(pageState.token);
-
+    console.log("myPostsObj", myPosts);
     //empty the cardGroup space
     cardGroup.empty();
 
